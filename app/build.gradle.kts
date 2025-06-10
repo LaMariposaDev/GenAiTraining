@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
@@ -56,7 +57,6 @@ dependencies {
 
     // Koin (dependency injection)
     implementation(libs.koin.android)
-    implementation(libs.koin.androidx.viewmodel)
 
     // Retrofit for networking (with XML support)
     implementation(libs.retrofit)

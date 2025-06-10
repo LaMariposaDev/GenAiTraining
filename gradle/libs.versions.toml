@@ -13,7 +13,7 @@ lifecycleViewmodelKtx = "2.9.0"
 navigationFragmentKtx = "2.6.0"
 navigationUiKtx = "2.6.0"
 room = "2.6.1"
-koin = "3.5.3"
+koin = "3.5.6"
 retrofit = "2.9.0"
 retrofitSimpleXml = "2.9.0"
 coroutinesAndroid = "1.7.3"
@@ -35,7 +35,6 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
-koin-androidx-viewmodel = { group = "io.insert-koin", name = "koin-androidx-viewmodel", version.ref = "koin" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-simplexml = { group = "com.squareup.retrofit2", name = "converter-simplexml", version.ref = "retrofitSimpleXml" }
 coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutinesAndroid" }
@@ -44,4 +43,5 @@ okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-i
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 
