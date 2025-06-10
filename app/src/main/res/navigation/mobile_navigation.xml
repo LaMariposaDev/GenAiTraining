@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.dev.lamariposa.boardgamesassociation.ui.search.SearchFragment"
+        android:name="com.dev.lamariposa.boardgamesassociation.presentation.ui.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.dev.lamariposa.boardgamesassociation.ui.dashboard.DashboardFragment"
+        android:name="com.dev.lamariposa.boardgamesassociation.presentation.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.dev.lamariposa.boardgamesassociation.ui.myGames.MyGamesFragment"
+        android:name="com.dev.lamariposa.boardgamesassociation.presentation.ui.myGames.MyGamesFragment"
         android:label="@string/title_my_games"
         tools:layout="@layout/fragment_my_games" />
 </navigation>
