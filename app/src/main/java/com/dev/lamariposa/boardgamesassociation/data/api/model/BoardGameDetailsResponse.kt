@@ -1,5 +1,6 @@
 package com.dev.lamariposa.boardgamesassociation.data.api.model
 
+import org.simpleframework.xml.Attribute
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList
 import org.simpleframework.xml.Root
@@ -12,7 +13,7 @@ data class BoardGameDetailsResponse(
 
 @Root(name = "item", strict = false)
 data class BoardGameDetailsItem(
-    @field:Element(name = "id", required = false)
+    @field:Attribute(name = "id", required = false)
     var id: String? = null,
 
     @field:Element(name = "name", required = false)

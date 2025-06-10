@@ -7,6 +7,7 @@ import retrofit2.http.Query
 
 interface BoardGameGeekApi {
     // Search board games by name
+    // GET https://boardgamegeek.com/xmlapi2/search?query={name}&type=boardgame
     @GET("search")
     suspend fun searchBoardGames(
         @Query("query") query: String,
@@ -14,6 +15,7 @@ interface BoardGameGeekApi {
     ): BoardGameSearchResponse
 
     // Get board game details by id
+    // GET https://boardgamegeek.com/xmlapi2/thing?id={id}
     @GET("thing")
     suspend fun getBoardGameDetails(
         @Query("id") id: String
