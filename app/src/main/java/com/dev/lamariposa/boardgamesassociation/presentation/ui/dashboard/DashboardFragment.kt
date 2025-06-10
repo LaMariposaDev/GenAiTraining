@@ -7,13 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.dev.lamariposa.boardgamesassociation.databinding.FragmentDashboardBinding
 import com.dev.lamariposa.boardgamesassociation.presentation.viewmodel.DashboardViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DashboardFragment : Fragment() {
 
     private var _binding: FragmentDashboardBinding? = null
+    private val dashboardViewModel: DashboardViewModel by viewModel()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -24,9 +25,6 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
-
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
