@@ -1,6 +1,7 @@
 package com.dev.lamariposa.boardgamesassociation.di
 
 import com.dev.lamariposa.boardgamesassociation.data.api.BoardGameApiService
+import com.dev.lamariposa.boardgamesassociation.data.api.MockBoardGameApiService
 import com.dev.lamariposa.boardgamesassociation.data.db.BoardGameDao
 import com.dev.lamariposa.boardgamesassociation.data.repository.BoardGameRepositoryImpl
 import com.dev.lamariposa.boardgamesassociation.domain.repository.BoardGameRepository
@@ -20,7 +21,9 @@ val appModule = module {
     // General app-wide dependencies
     single { provideOkHttpClient() }
     single { provideRetrofit(get()) }
-    single { provideBoardGameApiService(get()) }
+    
+    // Use mock implementation instead of real API service
+    single<BoardGameApiService> { MockBoardGameApiService() }
 }
 
 val dataModule = module {
