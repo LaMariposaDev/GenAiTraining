@@ -1,0 +1,51 @@
+# Android Studio
+.idea/
+*.iml
+
+# Gradle
+.gradle/
+build/
+*/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Log/OS files
+*.log
+*.swp
+.DS_Store
+
+# Generated files
+captures/
+output.json
+
+# Keystore files
+*.jks
+*.keystore
+
+# Crashlytics/Firebase
+crashlytics-build.properties
+fabric.properties
+
+# Misc
+*.apk
+*.ap_
+*.dex
+
+# NDK
+obj/
+.externalNativeBuild/
+
+# IntelliJ
+*.iws
+*.ipr
+
+# VS Code
+.vscode/
+
+# Mac OS
+*.DS_Store
+
+# Windows
+Thumbs.db
