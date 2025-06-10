@@ -10,6 +10,7 @@ object Mapper {
             name = entity.name,
             yearPublished = entity.year_published,
             description = entity.description,
-            imageUrl = entity.image_url
+            imageUrl = entity.image_url,
+            type = entity.type
         )
 }

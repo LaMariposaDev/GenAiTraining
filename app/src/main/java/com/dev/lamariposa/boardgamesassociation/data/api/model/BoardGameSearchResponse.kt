@@ -16,6 +16,9 @@ data class BoardGameSearchItem(
     @field:Attribute(name = "id", required = false)
     var id: String? = null,
 
+    @field:Attribute(name = "type", required = false)
+    var type: String? = null,
+
     @field:Element(name = "name", required = false)
     var name: BoardGameName? = null,
 

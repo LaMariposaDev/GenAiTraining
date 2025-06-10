@@ -10,7 +10,8 @@ fun BoardGameSearchItem.toDomainModel(): BoardGame {
         name = name?.value ?: "",
         yearPublished = yearPublished?.value?.toIntOrNull(),
         description = null,
-        imageUrl = null
+        imageUrl = null,
+        type = mapType(type)
     )
 }
 
@@ -20,6 +21,17 @@ fun BoardGameDetailsItem.toDomainModel(): BoardGame {
         name = name?.value ?: "",
         yearPublished = yearPublished?.value?.toIntOrNull(),
         description = description,
-        imageUrl = image
+        imageUrl = image,
+        type = mapType(type)
     )
+}
+
+private fun mapType(apiType: String?): String {
+    return when (apiType) {
+        "boardgame" -> "Board game"
+        "boardgameaccessory" -> "Accessory"
+        "boardgameexpansion" -> "Extension"
+        "videogame" -> "Video game"
+        else -> "Board game" // Default value
+    }
 }

@@ -41,6 +41,8 @@ class BoardGameAdapter(
         fun bind(boardGame: BoardGame) {
             binding.textGameName.text = boardGame.name
             binding.textGameYear.text = boardGame.yearPublished?.toString() ?: "Year unknown"
+            binding.textGameType.text = boardGame.type
+
         }
     }
 
