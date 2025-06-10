@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.dev.lamariposa.boardgamesassociation.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:name="com.dev.lamariposa.boardgamesassociation.ui.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.dev.lamariposa.boardgamesassociation.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:name="com.dev.lamariposa.boardgamesassociation.ui.myGames.MyGamesFragment"
+        android:label="@string/title_my_games"
+        tools:layout="@layout/fragment_my_games" />
 </navigation>
