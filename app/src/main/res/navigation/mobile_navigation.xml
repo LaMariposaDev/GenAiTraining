@@ -3,23 +3,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@id/searchFragment">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.dev.lamariposa.boardgamesassociation.presentation.ui.search.SearchFragment"
-        android:label="@string/title_search"
-        tools:layout="@layout/fragment_search" />
-
-    <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/dashboardFragment"
         android:name="com.dev.lamariposa.boardgamesassociation.presentation.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:label="Dashboard"
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/action_dashboardFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_myGamesFragment"
+            app:destination="@id/myGamesFragment" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/searchFragment"
+        android:name="com.dev.lamariposa.boardgamesassociation.presentation.ui.search.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_boardGameDetailFragment"
+            app:destination="@id/boardGameDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/myGamesFragment"
         android:name="com.dev.lamariposa.boardgamesassociation.presentation.ui.myGames.MyGamesFragment"
-        android:label="@string/title_my_games"
-        tools:layout="@layout/fragment_my_games" />
+        android:label="My Games"
+        tools:layout="@layout/fragment_my_games">
+        <action
+            android:id="@+id/action_myGamesFragment_to_boardGameDetailFragment"
+            app:destination="@id/boardGameDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/boardGameDetailFragment"
+        android:name="com.dev.lamariposa.boardgamesassociation.presentation.ui.details.BoardGameDetailFragment"
+        android:label="Board Game Details"
+        tools:layout="@layout/fragment_board_game_detail">
+        <argument
+            android:name="boardGameId"
+            app:argType="integer" />
+    </fragment>
+
 </navigation>

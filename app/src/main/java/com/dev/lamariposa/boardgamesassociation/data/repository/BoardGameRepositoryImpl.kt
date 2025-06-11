@@ -6,6 +6,7 @@ import com.dev.lamariposa.boardgamesassociation.data.db.BoardGameDao
 import com.dev.lamariposa.boardgamesassociation.data.network.Result
 import com.dev.lamariposa.boardgamesassociation.data.network.safeApiCall
 import com.dev.lamariposa.boardgamesassociation.domain.model.BoardGame
+import com.dev.lamariposa.boardgamesassociation.domain.model.BoardGameDetail
 import com.dev.lamariposa.boardgamesassociation.domain.repository.BoardGameRepository
 
 class BoardGameRepositoryImpl(
@@ -31,6 +32,34 @@ class BoardGameRepositoryImpl(
                 emptyList()
             }
             is Result.Loading -> emptyList()
+        }
+    }
+    
+    override suspend fun getBoardGameDetails(id: Int): kotlin.Result<BoardGameDetail> {
+        return try {
+            val result = safeApiCall { api.getBoardGameDetails(id.toString()) }
+            
+            when (result) {
+                is Result.Success -> {
+                    val boardGameDetail = result.data.items?.firstOrNull()?.let {
+                        com.dev.lamariposa.boardgamesassociation.data.api.mapper.toDomainModel(it)
+                    }
+                    
+                    if (boardGameDetail != null) {
+                        kotlin.Result.success(boardGameDetail)
+                    } else {
+                        kotlin.Result.failure(Exception("Board game details not found"))
+                    }
+                }
+                is Result.Error -> {
+                    kotlin.Result.failure(result.exception)
+                }
+                is Result.Loading -> {
+                    kotlin.Result.failure(Exception("Loading state should not be returned"))
+                }
+            }
+        } catch (e: Exception) {
+            kotlin.Result.failure(e)
         }
     }
 }

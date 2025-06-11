@@ -5,7 +5,9 @@ import com.dev.lamariposa.boardgamesassociation.data.api.MockBoardGameApiService
 import com.dev.lamariposa.boardgamesassociation.data.db.BoardGameDao
 import com.dev.lamariposa.boardgamesassociation.data.repository.BoardGameRepositoryImpl
 import com.dev.lamariposa.boardgamesassociation.domain.repository.BoardGameRepository
+import com.dev.lamariposa.boardgamesassociation.domain.usecase.GetBoardGameDetailsUseCase
 import com.dev.lamariposa.boardgamesassociation.domain.usecase.SearchBoardGamesUseCase
+import com.dev.lamariposa.boardgamesassociation.presentation.viewmodel.BoardGameDetailViewModel
 import com.dev.lamariposa.boardgamesassociation.presentation.viewmodel.DashboardViewModel
 import com.dev.lamariposa.boardgamesassociation.presentation.viewmodel.MyGamesViewModel
 import com.dev.lamariposa.boardgamesassociation.presentation.viewmodel.SearchViewModel
@@ -21,7 +23,9 @@ val appModule = module {
     // General app-wide dependencies
     single { provideOkHttpClient() }
     single { provideRetrofit(get()) }
-    
+
+    //Use real API service in production
+//    single { provideBoardGameApiService(get()) }
     // Use mock implementation instead of real API service
     single<BoardGameApiService> { MockBoardGameApiService() }
 }
@@ -37,12 +41,14 @@ val dataModule = module {
 val domainModule = module {
     // Domain layer dependencies (use cases)
     factory { SearchBoardGamesUseCase(get()) }
+    factory { GetBoardGameDetailsUseCase(get()) }
 }
 
 val presentationModule = module {
     viewModel { SearchViewModel(get()) }
     viewModel { MyGamesViewModel() }
     viewModel { DashboardViewModel() }
+    viewModel { BoardGameDetailViewModel(get()) }
 }
 
 // Network providers

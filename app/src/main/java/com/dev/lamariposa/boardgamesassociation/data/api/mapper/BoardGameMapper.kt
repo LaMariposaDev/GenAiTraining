@@ -18,7 +18,7 @@ fun BoardGameSearchItem.toDomainModel(): BoardGame {
 fun BoardGameDetailsItem.toDomainModel(): BoardGame {
     return BoardGame(
         id = id?.toIntOrNull() ?: 0,
-        name = name?.value ?: "",
+        name = primaryName ?: "",
         yearPublished = yearPublished?.value?.toIntOrNull(),
         description = description,
         imageUrl = image,

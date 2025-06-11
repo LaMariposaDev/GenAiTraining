@@ -5,12 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dev.lamariposa.boardgamesassociation.databinding.FragmentSearchBinding
 import com.dev.lamariposa.boardgamesassociation.domain.model.BoardGame
@@ -110,11 +110,9 @@ class SearchFragment : Fragment() {
     }
     
     private fun onBoardGameClicked(boardGame: BoardGame) {
-        // For now, just show a toast
-        Toast.makeText(requireContext(), "Selected: ${boardGame.name}", Toast.LENGTH_SHORT).show()
-        
-        // In the future, we would navigate to the detail screen
-        // Example: findNavController().navigate(SearchFragmentDirections.actionSearchToDetail(boardGame.id))
+        // Navigate to the board game details screen
+        val action = SearchFragmentDirections.actionSearchFragmentToBoardGameDetailFragment(boardGame.id)
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {

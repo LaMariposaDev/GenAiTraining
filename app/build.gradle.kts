@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.androidx.nav.safeargs)
 }
 
 android {
@@ -67,6 +68,10 @@ dependencies {
 
     // OkHttp logging
     implementation(libs.okhttp.logging.interceptor)
+    
+    // Glide for image loading
+    implementation(libs.glide)
+    kapt(libs.glide.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

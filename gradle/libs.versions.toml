@@ -12,12 +12,14 @@ lifecycleLivedataKtx = "2.9.0"
 lifecycleViewmodelKtx = "2.9.0"
 navigationFragmentKtx = "2.6.0"
 navigationUiKtx = "2.6.0"
+navigationPlugin = "2.6.0"
 room = "2.6.1"
 koin = "3.5.6"
 retrofit = "2.9.0"
 retrofitSimpleXml = "2.9.0"
 coroutinesAndroid = "1.7.3"
 okhttpLogging = "4.12.0"
+glide = "4.16.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -39,9 +41,11 @@ retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = 
 retrofit-simplexml = { group = "com.squareup.retrofit2", name = "converter-simplexml", version.ref = "retrofitSimpleXml" }
 coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutinesAndroid" }
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttpLogging" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
-
+androidx-nav-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigationPlugin" }

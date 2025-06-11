@@ -21,8 +21,10 @@ class MockBoardGameApiService : BoardGameApiService {
     }
     
     override suspend fun getBoardGameDetails(id: String): BoardGameDetailsResponse {
-        // For the details endpoint, we could also return mock data
-        // For now, just return an empty response
-        return BoardGameDetailsResponse(items = emptyList())
+        // Get mock XML data for board game details
+        val xmlData = MockXmlProvider.getMockBoardGameDetailsResponse2(id)
+
+        // Parse the XML string into BoardGameDetailsResponse object
+        return serializer.read(BoardGameDetailsResponse::class.java, xmlData)
     }
 }
