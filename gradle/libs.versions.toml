@@ -19,6 +19,11 @@ retrofit = "2.9.0"
 retrofitSimpleXml = "2.9.0"
 coroutinesAndroid = "1.7.3"
 okhttpLogging = "4.12.0"
+mockkVersion = "1.13.8"
+archCoreTesting = "2.2.0"
+androidxCoreTesting = "1.5.0"
+coroutinesTest = "1.7.3"
+timber = "5.0.1"
 glide = "4.16.0"
 
 [libraries]
@@ -41,6 +46,11 @@ retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = 
 retrofit-simplexml = { group = "com.squareup.retrofit2", name = "converter-simplexml", version.ref = "retrofitSimpleXml" }
 coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutinesAndroid" }
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttpLogging" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockkVersion" }
+androidx-arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "archCoreTesting" }
+androidx-core-testing = { group = "androidx.test", name = "core-ktx", version.ref = "androidxCoreTesting" }
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
 

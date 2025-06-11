@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 
 class MyGamesViewModel(
     private val getMyBoardGamesUseCase: GetMyBoardGamesUseCase,
-    private val addBoardGameToMyGamesUseCase: AddBoardGameToMyGamesUseCase,
     private val removeBoardGameFromMyGamesUseCase: RemoveBoardGameFromMyGamesUseCase
 ) : ViewModel() {
 
@@ -28,7 +27,7 @@ class MyGamesViewModel(
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
-    private val _loading = MutableStateFlow(false)
+    private val _loading = MutableStateFlow(true)
     val loading: StateFlow<Boolean> = _loading.asStateFlow()
 
     init {
@@ -47,18 +46,6 @@ class MyGamesViewModel(
                     _myBoardGames.value = games
                     _loading.value = false
                 }
-        }
-    }
-
-    fun addBoardGameToMyCollection(boardGame: BoardGame, owner: Person? = null, holder: Person? = null, notes: String? = null) {
-        viewModelScope.launch {
-            try {
-                addBoardGameToMyGamesUseCase(boardGame, owner, holder, notes)
-                // After adding, refresh the list
-                loadMyBoardGames()
-            } catch (e: Exception) {
-                _error.postValue("Error adding game: ${e.message}")
-            }
         }
     }
 

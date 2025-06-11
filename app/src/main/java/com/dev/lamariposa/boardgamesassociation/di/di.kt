@@ -73,7 +73,7 @@ val domainModule = module {
 
 val presentationModule = module {
     viewModel { SearchViewModel(get()) }
-    viewModel { MyGamesViewModel(get(), get(), get()) }
+    viewModel { MyGamesViewModel(get(), get()) }
     viewModel { DashboardViewModel() }
     viewModel { BoardGameDetailViewModel(get(), get(), get(), get()) }
 }
