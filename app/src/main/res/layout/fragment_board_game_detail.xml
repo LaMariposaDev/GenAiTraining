@@ -57,7 +57,7 @@
             android:id="@+id/contentGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="boardGameImageView,titleTextView,yearTextView,playersTextView,playingTimeTextView,typeTextView,descriptionTextView" />
+            app:constraint_referenced_ids="boardGameImageView,titleTextView,yearTextView,playersTextView,playingTimeTextView,typeTextView,descriptionTextView,addToMyGamesButton" />
 
         <ImageView
             android:id="@+id/boardGameImageView"
@@ -145,6 +145,19 @@
             app:layout_constraintTop_toBottomOf="@+id/descriptionLabel"
             app:layout_constraintVertical_bias="0.0"
             tools:text="Game description text goes here with a lot of details about the game and how to play it." />
+
+        <Button
+            android:id="@+id/addToMyGamesButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Add to My Games"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/descriptionTextView"
+            app:layout_constraintStart_toStartOf="@+id/descriptionTextView"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionTextView"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

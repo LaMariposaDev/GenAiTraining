@@ -3,6 +3,8 @@ package com.dev.lamariposa.boardgamesassociation.data.repository
 import com.dev.lamariposa.boardgamesassociation.data.api.BoardGameApiService
 import com.dev.lamariposa.boardgamesassociation.data.api.mapper.toDomainModel
 import com.dev.lamariposa.boardgamesassociation.data.db.BoardGameDao
+import com.dev.lamariposa.boardgamesassociation.data.mapper.toDomain
+import com.dev.lamariposa.boardgamesassociation.data.mapper.toEntity
 import com.dev.lamariposa.boardgamesassociation.data.network.Result
 import com.dev.lamariposa.boardgamesassociation.data.network.safeApiCall
 import com.dev.lamariposa.boardgamesassociation.domain.model.BoardGame
@@ -61,5 +63,15 @@ class BoardGameRepositoryImpl(
         } catch (e: Exception) {
             kotlin.Result.failure(e)
         }
+    }
+    
+    override suspend fun saveBoardGame(boardGame: BoardGame): Long {
+        val entity = boardGame.toEntity()
+        return dao.insertBoardGame(entity).toLong()
+    }
+    
+    override suspend fun getBoardGameById(id: Int): BoardGame? {
+        val entity = dao.getBoardGameById(id)
+        return entity?.toDomain()
     }
 }

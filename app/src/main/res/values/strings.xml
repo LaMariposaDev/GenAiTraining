@@ -3,4 +3,21 @@
     <string name="title_search">Search</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_my_games">My games</string>
+    
+    <!-- Add to My Games -->
+    <string name="add_to_my_games">Add to My Games</string>
+    <string name="remove_from_my_games">Remove from My Games</string>
+    <string name="empty_my_games">You don\'t have any board games in your collection yet. Search for games to add them to your collection.</string>
+    <string name="add_person">Add New Person</string>
+    <string name="owner">Owner</string>
+    <string name="holder">Current holder</string>
+    <string name="notes">Notes</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="name_required">Name is required</string>
+    <string name="remove_game_title">Remove Game</string>
+    <string name="remove_game_message">Are you sure you want to remove %1$s from your collection?</string>
+    <string name="remove">Remove</string>
+    <string name="added_to_my_games">Added to My Games</string>
+    <string name="none">None</string>
 </resources>

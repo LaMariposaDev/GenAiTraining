@@ -3,11 +3,74 @@ package com.dev.lamariposa.boardgamesassociation.presentation.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.dev.lamariposa.boardgamesassociation.domain.model.BoardGame
+import com.dev.lamariposa.boardgamesassociation.domain.model.MyBoardGame
+import com.dev.lamariposa.boardgamesassociation.domain.model.Person
+import com.dev.lamariposa.boardgamesassociation.domain.usecase.AddBoardGameToMyGamesUseCase
+import com.dev.lamariposa.boardgamesassociation.domain.usecase.GetMyBoardGamesUseCase
+import com.dev.lamariposa.boardgamesassociation.domain.usecase.RemoveBoardGameFromMyGamesUseCase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.launch
 
-class MyGamesViewModel : ViewModel() {
+class MyGamesViewModel(
+    private val getMyBoardGamesUseCase: GetMyBoardGamesUseCase,
+    private val addBoardGameToMyGamesUseCase: AddBoardGameToMyGamesUseCase,
+    private val removeBoardGameFromMyGamesUseCase: RemoveBoardGameFromMyGamesUseCase
+) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+    private val _myBoardGames = MutableStateFlow<List<MyBoardGame>>(emptyList())
+    val myBoardGames: StateFlow<List<MyBoardGame>> = _myBoardGames.asStateFlow()
+
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String> = _error
+
+    private val _loading = MutableStateFlow(false)
+    val loading: StateFlow<Boolean> = _loading.asStateFlow()
+
+    init {
+        loadMyBoardGames()
     }
-    val text: LiveData<String> = _text
+
+    fun loadMyBoardGames() {
+        viewModelScope.launch {
+            _loading.value = true
+            getMyBoardGamesUseCase()
+                .catch { e ->
+                    _error.postValue("Error loading games: ${e.message}")
+                    _loading.value = false
+                }
+                .collect { games ->
+                    _myBoardGames.value = games
+                    _loading.value = false
+                }
+        }
+    }
+
+    fun addBoardGameToMyCollection(boardGame: BoardGame, owner: Person? = null, holder: Person? = null, notes: String? = null) {
+        viewModelScope.launch {
+            try {
+                addBoardGameToMyGamesUseCase(boardGame, owner, holder, notes)
+                // After adding, refresh the list
+                loadMyBoardGames()
+            } catch (e: Exception) {
+                _error.postValue("Error adding game: ${e.message}")
+            }
+        }
+    }
+
+    fun removeBoardGameFromCollection(myBoardGameId: Long) {
+        viewModelScope.launch {
+            try {
+                removeBoardGameFromMyGamesUseCase(myBoardGameId)
+                // After removing, refresh the list
+                loadMyBoardGames()
+            } catch (e: Exception) {
+                _error.postValue("Error removing game: ${e.message}")
+            }
+        }
+    }
 }
