@@ -23,8 +23,8 @@ mockkVersion = "1.13.8"
 archCoreTesting = "2.2.0"
 androidxCoreTesting = "1.5.0"
 coroutinesTest = "1.7.3"
-timber = "5.0.1"
 glide = "4.16.0"
+firebase-bom = "32.8.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -50,12 +50,19 @@ mockk = { group = "io.mockk", name = "mockk", version.ref = "mockkVersion" }
 androidx-arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "archCoreTesting" }
 androidx-core-testing = { group = "androidx.test", name = "core-ktx", version.ref = "androidxCoreTesting" }
 coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
-timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore-ktx" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging-ktx" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 androidx-nav-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigationPlugin" }
+google-services = { id = "com.google.gms.google-services", version = "4.4.1" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "2.9.9" }

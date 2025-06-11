@@ -22,6 +22,7 @@ import com.dev.lamariposa.boardgamesassociation.domain.usecase.GetPersonsUseCase
 import com.dev.lamariposa.boardgamesassociation.domain.usecase.RemoveBoardGameFromMyGamesUseCase
 import com.dev.lamariposa.boardgamesassociation.domain.usecase.SaveBoardGameUseCase
 import com.dev.lamariposa.boardgamesassociation.domain.usecase.SearchBoardGamesUseCase
+import com.dev.lamariposa.boardgamesassociation.presentation.viewmodel.AuthViewModel
 import com.dev.lamariposa.boardgamesassociation.presentation.viewmodel.BoardGameDetailViewModel
 import com.dev.lamariposa.boardgamesassociation.presentation.viewmodel.DashboardViewModel
 import com.dev.lamariposa.boardgamesassociation.presentation.viewmodel.MyGamesViewModel
@@ -76,6 +77,7 @@ val presentationModule = module {
     viewModel { MyGamesViewModel(get(), get()) }
     viewModel { DashboardViewModel() }
     viewModel { BoardGameDetailViewModel(get(), get(), get(), get()) }
+    viewModel { AuthViewModel(get()) }
 }
 
 // Network providers

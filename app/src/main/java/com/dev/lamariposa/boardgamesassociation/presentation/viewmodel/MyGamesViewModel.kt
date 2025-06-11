@@ -1,5 +1,6 @@
 package com.dev.lamariposa.boardgamesassociation.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -39,6 +40,7 @@ class MyGamesViewModel(
             _loading.value = true
             getMyBoardGamesUseCase()
                 .catch { e ->
+                    Log.e("MyGamesViewModel", "Error loading games: ${e.message}", e)
                     _error.postValue("Error loading games: ${e.message}")
                     _loading.value = false
                 }
@@ -56,6 +58,7 @@ class MyGamesViewModel(
                 // After removing, refresh the list
                 loadMyBoardGames()
             } catch (e: Exception) {
+                Log.e("MyGamesViewModel", "Error removing game: ${e.message}", e)
                 _error.postValue("Error removing game: ${e.message}")
             }
         }

@@ -64,7 +64,6 @@ dependencies {
 
 6. **Avoid Static State**: Don't use static variables that could cause tests to interfere with each other.
 
-7. **Add Timber Logging**: Include Timber log statements for debugging test failures.
 
 ## What to Test
 
@@ -183,24 +182,6 @@ Always test these edge cases:
 4. Zero, negative, and boundary values for numeric operations
 5. Network errors and timeouts
 6. Database errors
-
-## Logging in Tests
-
-Add Timber logging statements to help with debugging:
-
-```kotlin
-@Before
-fun setup() {
-    Timber.plant(DebugTree())
-    Timber.d("Setting up test: ${javaClass.simpleName}")
-}
-
-@After
-fun tearDown() {
-    Timber.d("Tearing down test: ${javaClass.simpleName}")
-    Timber.uprootAll()
-}
-```
 
 ## Robolectric Guidelines
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_navigation">
+
+    <!-- Authentication Graph -->
+    <include app:graph="@navigation/auth_navigation" />
+    
+    <!-- Main Content Graph -->
+    <include app:graph="@navigation/mobile_navigation" />
+    
+    <!-- Global Actions -->
+    <action
+        android:id="@+id/action_global_to_authScreen"
+        app:destination="@id/auth_navigation"
+        app:popUpTo="@id/main_navigation"
+        app:popUpToInclusive="false" />
+    
+    <action
+        android:id="@+id/action_global_to_mainScreen"
+        app:destination="@id/mobile_navigation"
+        app:popUpTo="@id/main_navigation"
+        app:popUpToInclusive="false" />
+        
+    <action
+        android:id="@+id/action_global_to_emailVerificationScreen"
+        app:destination="@id/emailVerificationFragment"
+        app:popUpTo="@id/main_navigation"
+        app:popUpToInclusive="false" />
+
+</navigation>

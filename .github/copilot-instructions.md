@@ -36,11 +36,10 @@ The project will follow Clean Architecture principles and use the MVVM pattern. 
 - **Firebase Cloud Messaging**: For push notifications.
 - **Firebase Authentication**: For user authentication.
 - **Firebase Analytics**: For tracking user interactions and app performance.
-- **Timber**: For logging in Android applications.
 - **LeakCanary**: For detecting memory leaks in Android applications.
 
 ## Code Documentation, Comments and Logging
 
 * Always update the README.md file with any significant changes to the project structure, dependencies, or setup instructions.
-* Always add timber logging statements to your code to help with debugging and tracking application behavior.
+* Always add android logging statements to your code to help with debugging and tracking application behavior.
  
