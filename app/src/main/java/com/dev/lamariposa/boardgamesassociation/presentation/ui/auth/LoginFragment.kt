@@ -1,6 +1,8 @@
 package com.dev.lamariposa.boardgamesassociation.presentation.ui.auth
 
 import android.os.Bundle
+import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +13,8 @@ import com.dev.lamariposa.boardgamesassociation.R
 import com.dev.lamariposa.boardgamesassociation.databinding.FragmentLoginBinding
 import com.dev.lamariposa.boardgamesassociation.domain.model.AuthState
 import com.dev.lamariposa.boardgamesassociation.presentation.viewmodel.AuthViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import android.util.Log
-import com.dev.lamariposa.boardgamesassociation.MainActivity
 
 /**
  * Login screen fragment
@@ -23,7 +24,7 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    private val authViewModel: AuthViewModel by viewModel()
+    private val authViewModel: AuthViewModel by activityViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,33 +44,16 @@ class LoginFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        // Observe authentication state
-        authViewModel.authState.observe(viewLifecycleOwner) { state ->
-            Log.d("LoginFragment", "Auth state changed: $state")
-            when (state) {
-                AuthState.AUTHENTICATED -> {
-                    Log.d("LoginFragment", "User is authenticated, navigating to main screen")
-                    navigateToMainScreen()
-                }
-                AuthState.UNVERIFIED_EMAIL -> {
-                    Log.d("LoginFragment", "User's email is not verified, navigating to email verification screen")
-                    navigateToEmailVerification()
-                }
-                AuthState.UNAUTHENTICATED -> {
-                    // Stay on login screen
-                }
-                AuthState.LOADING -> {
-                    // Show loading if needed
-                }
-            }
-        }
-
+        // Authentication state is observed by the AuthActivity which handles all navigation
+        
         // Observe loading state
         authViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
             binding.btnLogin.isEnabled = !isLoading
+            binding.tvSignUp.isEnabled = !isLoading
+            binding.tvForgotPassword.isEnabled = !isLoading
         }
-
+        
         // Observe auth errors
         authViewModel.authError.observe(viewLifecycleOwner) { error ->
             error?.let {
@@ -111,7 +95,7 @@ class LoginFragment : Fragment() {
         if (email.isEmpty()) {
             binding.tilEmail.error = "Email is required"
             isValid = false
-        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             binding.tilEmail.error = "Enter a valid email address"
             isValid = false
         } else {
@@ -131,22 +115,8 @@ class LoginFragment : Fragment() {
         return isValid
     }
 
-    private fun navigateToMainScreen() {
-        Log.d("LoginFragment", "Navigating to main screen")
-        requireActivity().startActivity(
-            android.content.Intent(
-                requireContext(),
-                MainActivity::class.java
-            )
-        )
-
-    }
-
-    private fun navigateToEmailVerification() {
-        Log.d("LoginFragment", "Navigating to email verification screen")
-        findNavController().navigate(R.id.action_loginFragment_to_emailVerificationFragment)
-    }
-
+    // AuthActivity handles the navigation to MainActivity when user is authenticated
+    
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

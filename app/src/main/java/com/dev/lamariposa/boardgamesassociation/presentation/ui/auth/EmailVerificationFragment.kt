@@ -12,7 +12,7 @@ import com.dev.lamariposa.boardgamesassociation.R
 import com.dev.lamariposa.boardgamesassociation.databinding.FragmentEmailVerificationBinding
 import com.dev.lamariposa.boardgamesassociation.domain.model.AuthState
 import com.dev.lamariposa.boardgamesassociation.presentation.viewmodel.AuthViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 /**
  * Email verification screen fragment
@@ -22,7 +22,7 @@ class EmailVerificationFragment : Fragment() {
     private var _binding: FragmentEmailVerificationBinding? = null
     private val binding get() = _binding!!
 
-    private val authViewModel: AuthViewModel by viewModel()
+    private val authViewModel: AuthViewModel by activityViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,39 +42,12 @@ class EmailVerificationFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        // Observe user
+        // Authentication state is observed by the AuthActivity which handles all navigation
+        
+        // Observe user for displaying email
         authViewModel.user.observe(viewLifecycleOwner) { user ->
             if (user != null) {
                 binding.tvEmail.text = user.email
-                
-                if (user.isEmailVerified) {
-                    Log.d("EmailVerificationFragment", "User's email is verified, navigating to main screen")
-                    navigateToMainScreen()
-                }
-            } else {
-                Log.d("EmailVerificationFragment", "No user is signed in, navigating back to login screen")
-                findNavController().navigate(R.id.action_emailVerificationFragment_to_loginFragment)
-            }
-        }
-
-        // Observe authentication state
-        authViewModel.authState.observe(viewLifecycleOwner) { state ->
-            Log.d("EmailVerificationFragment", "Auth state changed: $state")
-            when (state) {
-                AuthState.AUTHENTICATED -> {
-                    Log.d("EmailVerificationFragment", "User is authenticated and verified, navigating to main screen")
-                    navigateToMainScreen()
-                }
-                AuthState.UNVERIFIED_EMAIL -> {
-                    // Stay on this screen
-                }
-                AuthState.UNAUTHENTICATED -> {
-                    Log.d("EmailVerificationFragment", "User is not authenticated, navigating to login screen")
-                    findNavController().navigate(R.id.action_emailVerificationFragment_to_loginFragment)
-                }
-                AuthState.LOADING -> {
-                    // Show loading if needed
-                }
             }
         }
 
@@ -103,10 +76,8 @@ class EmailVerificationFragment : Fragment() {
         // Refresh button (check if email is verified)
         binding.btnRefresh.setOnClickListener {
             Log.d("EmailVerificationFragment", "Refreshing user state to check email verification")
-            // The Firebase authentication state listener should handle this automatically,
-            // but we can force a sign-out and sign-in to refresh the token
+            // Just sign out - AuthActivity will handle navigation back to login
             authViewModel.signOut()
-            findNavController().navigate(R.id.action_emailVerificationFragment_to_loginFragment)
         }
 
         // Sign out text
@@ -116,10 +87,7 @@ class EmailVerificationFragment : Fragment() {
         }
     }
 
-    private fun navigateToMainScreen() {
-        Log.d("EmailVerificationFragment", "Navigating to main screen")
-        findNavController().navigate(R.id.action_emailVerificationFragment_to_mainFragment)
-    }
+    // AuthActivity handles the navigation to MainActivity when user is authenticated
 
     override fun onDestroyView() {
         super.onDestroyView()

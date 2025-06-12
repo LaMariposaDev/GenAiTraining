@@ -69,7 +69,7 @@ class AuthViewModel(private val authUseCases: AuthUseCases) : ViewModel() {
             when (val result = authUseCases.signIn(email, password)) {
                 is AuthResult.Success -> {
                     Log.d("AuthViewModel", "Sign in successful for user: ${result.user.email}")
-                    // Success is handled by the user flow
+                    _authState.postValue(AuthState.AUTHENTICATED)
                 }
                 is AuthResult.Error -> {
                     Log.e("AuthViewModel", "Sign in failed", result.exception)

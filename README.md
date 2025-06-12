@@ -86,7 +86,39 @@ All authentication-related fragments (login, register, password reset, email ver
 5. Remember me functionality
 6. Secure logout
 
+
 **Note:** The main app flow is now separated from the authentication flow for better modularity and maintainability.
+
+## Auth Architecture Update (2025-06-12)
+
+The authentication flow has been consolidated and simplified:
+
+1. **AuthActivity** is now the single source of truth for authentication state
+   - It handles ALL navigation based on authentication state:
+     - To MainActivity when authenticated
+     - To EmailVerificationFragment when email is unverified
+     - To LoginFragment when unauthenticated
+   - It observes `AuthViewModel.authState` and responds to state changes
+   - It uses the `FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK` flags when starting MainActivity to prevent navigation back to login
+
+2. **Auth Fragments** have been streamlined
+   - They focus on their specific responsibilities (login, register, password reset, email verification)
+   - They no longer observe or handle auth state at all (this is now exclusive to AuthActivity)
+   - They only observe loading states and error messages
+   - They use consistent error handling, loading states, and UI patterns
+
+3. **AuthViewModel** remains unchanged, but is now used more consistently
+   - It provides a single source of truth for authentication state
+   - It handles all authentication operations (sign in, register, password reset, etc.)
+   - It provides loading states and error handling
+
+## Auth Navigation Update (2025-06-12)
+
+After successful login or registration, the user is now automatically navigated from `AuthActivity` to `MainActivity`, and `AuthActivity` is finished. This ensures the authentication flow is properly separated from the main app navigation. If the user is not authenticated, they remain in `AuthActivity`.
+
+**Implementation:**
+- The `AuthActivity` observes `authViewModel.authState`. When the state becomes `AUTHENTICATED`, it starts `MainActivity` and calls `finish()`.
+- Logging statements have been added for easier debugging and tracking of navigation events.
 
 ## Contributing
 

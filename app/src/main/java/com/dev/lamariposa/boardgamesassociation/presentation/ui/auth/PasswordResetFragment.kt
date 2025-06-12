@@ -2,6 +2,7 @@ package com.dev.lamariposa.boardgamesassociation.presentation.ui.auth
 
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.dev.lamariposa.boardgamesassociation.databinding.FragmentPasswordResetBinding
 import com.dev.lamariposa.boardgamesassociation.presentation.viewmodel.AuthViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -20,7 +22,7 @@ class PasswordResetFragment : Fragment() {
     private var _binding: FragmentPasswordResetBinding? = null
     private val binding get() = _binding!!
 
-    private val authViewModel: AuthViewModel by viewModel()
+    private val authViewModel: AuthViewModel by activityViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,7 +80,7 @@ class PasswordResetFragment : Fragment() {
         if (email.isEmpty()) {
             binding.tilEmail.error = "Email is required"
             return false
-        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             binding.tilEmail.error = "Enter a valid email address"
             return false
         }
@@ -90,8 +92,8 @@ class PasswordResetFragment : Fragment() {
     private fun sendPasswordResetEmail(email: String) {
         authViewModel.sendPasswordResetEmail(email)
         
-        // We don't need to observe a success because the error will be shown if there is one
-        // and we want to show a message regardless
+        // Show a success message regardless of whether the email exists
+        // This is a security best practice to not reveal whether an email is registered
         Toast.makeText(
             requireContext(),
             "If an account exists with this email, a password reset link has been sent",

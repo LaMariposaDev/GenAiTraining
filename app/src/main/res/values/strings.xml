@@ -20,4 +20,6 @@
     <string name="remove">Remove</string>
     <string name="added_to_my_games">Added to My Games</string>
     <string name="none">None</string>
+    <string name="login_failed">Login failed. Please check your credentials.</string>
+    <string name="email_not_verified">Your email is not verified. Please check your inbox for a verification link.</string>
 </resources>

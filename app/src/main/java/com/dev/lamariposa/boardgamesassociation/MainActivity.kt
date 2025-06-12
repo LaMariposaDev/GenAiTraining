@@ -11,15 +11,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.dev.lamariposa.boardgamesassociation.databinding.ActivityMainBinding
-import com.dev.lamariposa.boardgamesassociation.domain.model.AuthState
-import com.dev.lamariposa.boardgamesassociation.presentation.viewmodel.AuthViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
-    private val authViewModel: AuthViewModel by viewModel()
     
     private val authDestinations = setOf(
         R.id.loginFragment,
@@ -52,34 +48,10 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
         
-        setupAuthObserver()
+        // Authentication logic is now handled only in AuthActivity
     }
     
-    private fun setupAuthObserver() {
-        Log.d("MainActivity", "Setting up auth observer")
-        authViewModel.authState.observe(this) { state ->
-            Log.d("MainActivity", "Auth state changed: $state")
-            when (state) {
-                AuthState.AUTHENTICATED -> {
-                    Log.d("MainActivity", "User authenticated, ensuring on main navigation")
-                    // No-op: MainActivity only handles main app navigation now
-                }
-                AuthState.UNVERIFIED_EMAIL -> {
-                    Log.d("MainActivity", "User's email not verified")
-                }
-                AuthState.UNAUTHENTICATED -> {
-                    Log.d("MainActivity", "User not authenticated, launching AuthActivity")
-                    startActivity(
-                        android.content.Intent(this, com.dev.lamariposa.boardgamesassociation.presentation.ui.auth.AuthActivity::class.java)
-                    )
-                    finish()
-                }
-                AuthState.LOADING -> {
-                    // Do nothing while loading
-                }
-            }
-        }
-    }
+    // Removed setupAuthObserver and all authentication state handling from MainActivity
     
     private fun isOnAuthScreen(): Boolean {
         val currentDestId = navController.currentDestination?.id

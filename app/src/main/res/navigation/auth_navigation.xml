@@ -19,11 +19,7 @@
         <action
             android:id="@+id/action_loginFragment_to_emailVerificationFragment"
             app:destination="@id/emailVerificationFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true" />
+        <!-- MainActivity navigation is now handled by AuthActivity -->
     </fragment>
 
     <fragment
@@ -34,11 +30,7 @@
         <action
             android:id="@+id/action_registerFragment_to_emailVerificationFragment"
             app:destination="@id/emailVerificationFragment" />
-        <action
-            android:id="@+id/action_registerFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true" />
+        <!-- MainActivity navigation is now handled by AuthActivity -->
     </fragment>
 
     <fragment
@@ -57,18 +49,9 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_emailVerificationFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true" />
+        <!-- MainActivity navigation is now handled by AuthActivity -->
     </fragment>
 
-    <!-- This is a placeholder for the main content navigation graph -->
-    <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.dev.lamariposa.boardgamesassociation.presentation.ui.dashboard.DashboardFragment"
-        android:label="Dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+    <!-- MainActivity navigation is now handled by AuthActivity -->
 
 </navigation>
