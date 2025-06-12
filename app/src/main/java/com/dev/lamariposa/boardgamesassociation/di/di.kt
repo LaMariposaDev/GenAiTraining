@@ -1,9 +1,7 @@
 package com.dev.lamariposa.boardgamesassociation.di
 
-import android.app.Application
-import androidx.room.Room
+import android.util.Log
 import com.dev.lamariposa.boardgamesassociation.data.api.BoardGameApiService
-import com.dev.lamariposa.boardgamesassociation.data.api.MockBoardGameApiService
 import com.dev.lamariposa.boardgamesassociation.data.db.AppDatabase
 import com.dev.lamariposa.boardgamesassociation.data.db.BoardGameDao
 import com.dev.lamariposa.boardgamesassociation.data.db.MyBoardGameDao
@@ -29,12 +27,12 @@ import com.dev.lamariposa.boardgamesassociation.presentation.viewmodel.MyGamesVi
 import com.dev.lamariposa.boardgamesassociation.presentation.viewmodel.SearchViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 import java.util.concurrent.TimeUnit
+import com.dev.lamariposa.boardgamesassociation.BuildConfig
 
 val appModule = module {
     // General app-wide dependencies
@@ -47,10 +45,7 @@ val appModule = module {
     single { providePersonDao(get()) }
     single { provideMyBoardGameDao(get()) }
 
-    //Use real API service in production
-//    single { provideBoardGameApiService(get()) }
-    // Use mock implementation instead of real API service
-    single<BoardGameApiService> { MockBoardGameApiService() }
+    single { provideBoardGameApiService(get()) }
 }
 
 val dataModule = module {
@@ -95,9 +90,18 @@ private fun provideOkHttpClient(): OkHttpClient {
 }
 
 private fun provideRetrofit(client: OkHttpClient): Retrofit {
+    Log.d("provideRetrofit", "Creating Retrofit instance with base URL: https://boardgamegeek.com/ ${BuildConfig.BGG_API_TOKEN}")
     return Retrofit.Builder()
-        .baseUrl("https://boardgamegeek.com/")
-        .client(client)
+        .baseUrl(BuildConfig.BASE_URL)
+        .client(
+            client.newBuilder().addInterceptor { chain ->
+                val request = chain.request().newBuilder()
+                    .addHeader("Authorization", "Bearer ${BuildConfig.BGG_API_TOKEN}")
+                    .build()
+
+                chain.proceed(request)
+            }.build()
+        )
         .addConverterFactory(SimpleXmlConverterFactory.create())
         .build()
 }

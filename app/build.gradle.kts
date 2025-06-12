@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
 }
+val bggApiToken = properties["BGG_API_TOKEN"] ?: throw GradleException("BGG_API_TOKEN nie jest ustawiony w local.properties")
+
 
 android {
     namespace = "com.dev.lamariposa.boardgamesassociation"
@@ -19,6 +21,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "BGG_API_TOKEN", "\"$bggApiToken\"")
+        buildConfigField("String", "BASE_URL", "\"https://boardgamegeek.com/\"")
     }
 
     buildTypes {
@@ -39,6 +44,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
