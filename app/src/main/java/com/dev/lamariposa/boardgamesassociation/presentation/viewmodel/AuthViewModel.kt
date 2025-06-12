@@ -36,8 +36,9 @@ class AuthViewModel(private val authUseCases: AuthUseCases) : ViewModel() {
     }
 
     private fun observeCurrentUser() {
+        viewModelScope.launch {
         Log.d("AuthViewModel", "Setting up current user observation")
-        authUseCases.getCurrentUser().onEach { user ->
+        authUseCases.getCurrentUser.invoke().let { user ->
             _user.value = user
             
             if (user != null) {
@@ -52,7 +53,8 @@ class AuthViewModel(private val authUseCases: AuthUseCases) : ViewModel() {
                 _authState.value = AuthState.UNAUTHENTICATED
                 Log.d("AuthViewModel", "User not authenticated")
             }
-        }.launchIn(viewModelScope)
+        }
+        }
     }
 
     /**

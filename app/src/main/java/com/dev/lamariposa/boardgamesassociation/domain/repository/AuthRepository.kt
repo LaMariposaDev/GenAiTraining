@@ -53,4 +53,10 @@ interface AuthRepository {
      * @return true if verified, false otherwise
      */
     fun isEmailVerified(): Boolean
+
+    /**
+     * Get all users from Firebase
+     * @return List of all users in the system
+     */
+    suspend fun getAllUsers(): List<User>
 }

@@ -17,6 +17,7 @@ import com.dev.lamariposa.boardgamesassociation.domain.usecase.AddPersonUseCase
 import com.dev.lamariposa.boardgamesassociation.domain.usecase.GetBoardGameDetailsUseCase
 import com.dev.lamariposa.boardgamesassociation.domain.usecase.GetMyBoardGamesUseCase
 import com.dev.lamariposa.boardgamesassociation.domain.usecase.GetPersonsUseCase
+import com.dev.lamariposa.boardgamesassociation.domain.usecase.GetUsersFromFirebaseUseCase
 import com.dev.lamariposa.boardgamesassociation.domain.usecase.RemoveBoardGameFromMyGamesUseCase
 import com.dev.lamariposa.boardgamesassociation.domain.usecase.SaveBoardGameUseCase
 import com.dev.lamariposa.boardgamesassociation.domain.usecase.SearchBoardGamesUseCase
@@ -65,13 +66,14 @@ val domainModule = module {
     factory { AddPersonUseCase(get()) }
     factory { GetPersonsUseCase(get()) }
     factory { SaveBoardGameUseCase(get()) }
+    factory { GetUsersFromFirebaseUseCase(get(), get()) }
 }
 
 val presentationModule = module {
     viewModel { SearchViewModel(get()) }
     viewModel { MyGamesViewModel(get(), get()) }
     viewModel { DashboardViewModel() }
-    viewModel { BoardGameDetailViewModel(get(), get(), get(), get()) }
+    viewModel { BoardGameDetailViewModel(get(), get(), get(), get(), get()) }
     viewModel { AuthViewModel(get()) }
 }
 

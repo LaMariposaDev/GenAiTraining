@@ -110,4 +110,19 @@ class AuthRepositoryImpl(
         Log.d("AuthRepositoryImpl", "Checking if email is verified: $isVerified")
         return isVerified
     }
+
+    override suspend fun getAllUsers(): List<User> {
+        Log.d("AuthRepositoryImpl", "Getting all users from Firebase")
+        return try {
+            val firebaseUsers = firebaseAuthService.getAllUsers()
+            val users = firebaseUsers.mapNotNull { firebaseUser ->
+                AuthMapper.mapToDomainUser(firebaseUser)
+            }
+            Log.d("AuthRepositoryImpl", "Successfully retrieved ${users.size} users from Firebase")
+            users
+        } catch (e: Exception) {
+            Log.e("AuthRepositoryImpl", "Failed to get users from Firebase", e)
+            emptyList()
+        }
+    }
 }

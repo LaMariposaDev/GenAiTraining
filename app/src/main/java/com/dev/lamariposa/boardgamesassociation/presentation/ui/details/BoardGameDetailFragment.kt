@@ -15,7 +15,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.dev.lamariposa.boardgamesassociation.R
-import com.dev.lamariposa.boardgamesassociation.databinding.DialogAddPersonBinding
 import com.dev.lamariposa.boardgamesassociation.databinding.DialogAddToMyGamesBinding
 import com.dev.lamariposa.boardgamesassociation.databinding.FragmentBoardGameDetailBinding
 import com.dev.lamariposa.boardgamesassociation.domain.model.BoardGameDetail
@@ -99,7 +98,7 @@ class BoardGameDetailFragment : Fragment() {
         }
         
         viewModel.loadBoardGameDetails(boardGameId)
-        viewModel.loadPersons()
+        viewModel.loadUsers()
     }
     
     private fun showLoading() {
@@ -162,16 +161,18 @@ class BoardGameDetailFragment : Fragment() {
         // Setup spinner adapters
         setupPersonsSpinner(dialogBinding.ownerSpinner)
         setupPersonsSpinner(dialogBinding.holderSpinner)
-
-        // Handle add new person button
-        dialogBinding.addOwnerButton.setOnClickListener {
-            showAddPersonDialog { newPerson ->
-                // After adding a new person, refresh the spinners
-                viewModel.loadPersons()
-                // Select the new person in the owner spinner
-                val position = persons.indexOfFirst { it.id == newPerson.id }
-                if (position >= 0) {
-                    dialogBinding.ownerSpinner.setSelection(position + 1) // +1 for "None" option
+        
+        // Hide the add person button since we're using Firebase users
+        dialogBinding.addOwnerButton.visibility = View.GONE
+        
+        // Select current user as owner by default
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.currentUserPerson.collect { currentUser ->
+                if (currentUser != null) {
+                    val position = persons.indexOfFirst { it.id == currentUser.id }
+                    if (position >= 0) {
+                        dialogBinding.ownerSpinner.setSelection(position + 1) // +1 for "None" option
+                    }
                 }
             }
         }
@@ -214,53 +215,6 @@ class BoardGameDetailFragment : Fragment() {
             items
         )
         spinner.adapter = adapter
-    }
-
-    private fun showAddPersonDialog(onPersonAdded: (Person) -> Unit) {
-        val dialogBinding = DialogAddPersonBinding.inflate(layoutInflater)
-        val dialog = AlertDialog.Builder(requireContext())
-            .setView(dialogBinding.root)
-            .create()
-
-        dialogBinding.saveButton.setOnClickListener {
-            val name = dialogBinding.nameEditText.text.toString().trim()
-            
-            if (name.isEmpty()) {
-                Toast.makeText(requireContext(), "Name is required", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            val email = dialogBinding.emailEditText.text.toString().trim()
-                .takeIf { it.isNotEmpty() }
-            val phone = dialogBinding.phoneEditText.text.toString().trim()
-                .takeIf { it.isNotEmpty() }
-            val address = dialogBinding.addressEditText.text.toString().trim()
-                .takeIf { it.isNotEmpty() }
-
-            val person = Person(
-                name = name,
-                email = email,
-                phone = phone,
-                address = address
-            )
-
-            // Use a coroutine to add the person
-            viewLifecycleOwner.lifecycleScope.launch {
-                try {
-                    val personId = viewModel.addPerson(person)
-                    onPersonAdded(person.copy(id = personId))
-                    dialog.dismiss()
-                } catch (e: Exception) {
-                    Toast.makeText(requireContext(), "Error adding person: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
-        dialogBinding.cancelButton.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialog.show()
     }
     
     override fun onDestroyView() {

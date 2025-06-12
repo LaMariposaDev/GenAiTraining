@@ -4,6 +4,8 @@ import com.dev.lamariposa.boardgamesassociation.data.api.auth.FirebaseAuthServic
 import com.dev.lamariposa.boardgamesassociation.data.repository.AuthRepositoryImpl
 import com.dev.lamariposa.boardgamesassociation.domain.repository.AuthRepository
 import com.dev.lamariposa.boardgamesassociation.domain.usecase.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import org.koin.dsl.module
 
 /**
@@ -11,9 +13,18 @@ import org.koin.dsl.module
  */
 val authModule = module {
     
+    // Firebase Services
+    single { 
+        FirebaseAuth.getInstance() 
+    }
+    
+    single { 
+        FirebaseFirestore.getInstance() 
+    }
+    
     // Firebase Auth Service
     single { 
-        FirebaseAuthService() 
+        FirebaseAuthService(get(), get()) 
     }
     
     // Auth Repository
@@ -46,14 +57,6 @@ val authModule = module {
     
     // Combined Use Cases
     factory {
-        AuthUseCases(
-            getCurrentUser = get(),
-            signIn = get(),
-            createUser = get(),
-            sendPasswordResetEmail = get(),
-            sendEmailVerification = get(),
-            signOut = get(),
-            isEmailVerified = get()
-        )
+        AuthUseCases(get(),get(),get(),get(),get(),get(),get())
     }
 }

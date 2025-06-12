@@ -5,6 +5,6 @@ import com.dev.lamariposa.boardgamesassociation.domain.repository.PersonReposito
 
 class AddPersonUseCase(private val repository: PersonRepository) {
     suspend operator fun invoke(person: Person): Long {
-        return repository.insertPerson(person)
+        return repository.addPerson(person)
     }
 }

@@ -15,12 +15,15 @@ interface PersonDao {
     @Update
     suspend fun updatePerson(person: PersonEntity)
 
-    @Query("SELECT * FROM person WHERE id = :personId")
-    suspend fun getPersonById(personId: Long): PersonEntity?
+    @Query("SELECT * FROM person WHERE id = :id")
+    suspend fun getPersonById(id: Long): PersonEntity?
+
+    @Query("SELECT * FROM person WHERE email = :email")
+    suspend fun getPersonByEmail(email: String): PersonEntity?
 
     @Query("SELECT * FROM person ORDER BY name ASC")
     suspend fun getAllPersons(): List<PersonEntity>
 
-    @Query("DELETE FROM person WHERE id = :personId")
-    suspend fun deletePerson(personId: Long)
+    @Query("DELETE FROM person WHERE id = :id")
+    suspend fun deletePerson(id: Long)
 }
